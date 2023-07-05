@@ -1,0 +1,459 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>常微分 | 小江的博客</title><meta name="keywords" content="常微分"><meta name="author" content="小江"><meta name="copyright" content="小江"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="常微分1.1 简介一阶线性方程性质微分方程     —&gt;      包含未知函数和未知函数的导数 微分方程的解    —-&gt;   是在某个区间成立（区间范围也可以是无穷） 例如：一个常微分方程 x&#39;(t)-x(t)&#x3D;0此微分方程的解是$x（t）&#x3D;e^{t}$,其解的区间是$(-\infty ,\infty )$ 描述的就是未知函数和导数的关系（注意他们的解的区间) 常微分和偏微分常微分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常微分">
+<meta property="og:url" content="https://rozen12123.github.io/posts/9c4368b0.html">
+<meta property="og:site_name" content="小江的博客">
+<meta property="og:description" content="常微分1.1 简介一阶线性方程性质微分方程     —&gt;      包含未知函数和未知函数的导数 微分方程的解    —-&gt;   是在某个区间成立（区间范围也可以是无穷） 例如：一个常微分方程 x&#39;(t)-x(t)&#x3D;0此微分方程的解是$x（t）&#x3D;e^{t}$,其解的区间是$(-\infty ,\infty )$ 描述的就是未知函数和导数的关系（注意他们的解的区间) 常微分和偏微分常微分">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgtg.com/2022/11/03/RmBet.jpg">
+<meta property="article:published_time" content="2022-09-06T00:55:41.000Z">
+<meta property="article:modified_time" content="2022-11-03T02:57:31.043Z">
+<meta property="article:author" content="小江">
+<meta property="article:tag" content="常微分">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgtg.com/2022/11/03/RmBet.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rozen12123.github.io/posts/9c4368b0"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><meta name="msapplication-TileColor" content="#49b1f5"/><link rel="apple-touch-icon" sizes="180x180" href="/img/siteicon/128.png"/><link rel="icon" type="image/png" sizes="32x32" href="/img/siteicon/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/img/siteicon/16.png"/><link rel="mask-icon" href="/img/siteicon/128.png" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '常微分',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-03 10:57:31'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="小江的博客" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/10/31/RiMSC.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.imgtg.com/2022/11/03/RmBet.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">小江的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">常微分</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-06T00:55:41.000Z" title="发表于 2022-09-06 08:55:41">2022-09-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-03T02:57:31.043Z" title="更新于 2022-11-03 10:57:31">2022-11-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="常微分"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="常微分"><a href="#常微分" class="headerlink" title="常微分"></a>常微分</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><h4 id="一阶线性方程"><a href="#一阶线性方程" class="headerlink" title="一阶线性方程"></a>一阶线性方程</h4><h5 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h5><p>微分方程     —&gt;      包含未知函数和未知函数的导数</p>
+<p>微分方程的解    —-&gt;   是在某个区间成立（区间范围也可以是无穷）</p>
+<h6 id="例如：一个常微分方程"><a href="#例如：一个常微分方程" class="headerlink" title="例如：一个常微分方程"></a>例如：一个常微分方程</h6><script type="math/tex; mode=display">
+x'(t)-x(t)=0</script><p>此微分方程的解是$x（t）=e^{t}$,其解的区间是$(-\infty ,\infty )$</p>
+<p>描述的就是未知函数和导数的关系（注意他们的解的区间)</p>
+<h4 id="常微分和偏微分"><a href="#常微分和偏微分" class="headerlink" title="常微分和偏微分"></a>常微分和偏微分</h4><p>常微分（ODE）：一维的（包含一个未知量）</p>
+<p>偏微分(PDE)：多维的（包含多个未知量）</p>
+<h5 id="常微分的次数"><a href="#常微分的次数" class="headerlink" title="常微分的次数"></a>常微分的次数</h5><p>常微分最高阶的导数就是它的阶数</p>
+<h5 id="例如"><a href="#例如" class="headerlink" title="例如"></a>例如</h5><p>$ x’(t) - x(t) = 0 $ 最高阶导数为一阶导，其阶数为一阶</p>
+<p>$x’’(t) - x(t) = 0$  最高阶导数为二阶导， 其阶数为二阶</p>
+<h5 id="一个特殊写法"><a href="#一个特殊写法" class="headerlink" title="一个特殊写法"></a>一个特殊写法</h5><p>通常情况下微分方程$x’(t)-x(t)=0$</p>
+<p>可以把x(t)简化得写成x</p>
+<p>化简后得写法是$x’-x=0$</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="1-2-简单的例子"><a href="#1-2-简单的例子" class="headerlink" title="1.2 简单的例子"></a>1.2 简单的例子</h2><h4 id="最重要的一个概念"><a href="#最重要的一个概念" class="headerlink" title="最重要的一个概念"></a>最重要的一个概念</h4><p>一个关于x(t)的微分方程</p>
+<script type="math/tex; mode=display">
+x'(t)=kx(t),k\in R</script><p>此时，方程的通解为</p>
+<script type="math/tex; mode=display">
+x(t) = ce^{kt}</script><p>要求：给定一个微分方程的解，我们可以写出对应的微分方程</p>
+<p>给出一个微分方程，我们可以求出它的解</p>
+<p>&nbsp;</p>
+<h5 id="例如-1"><a href="#例如-1" class="headerlink" title="例如"></a>例如</h5><p>一个微分方程的解是$x(t)=2e^{kt}$其微分方程为$x’(t)=2x(t)$</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="1-3-应用的一些例子"><a href="#1-3-应用的一些例子" class="headerlink" title="1.3 应用的一些例子"></a>1.3 应用的一些例子</h2><p>$x’(t)=kx(t),k \in R$经常运用在我们生活中的一些模型中,比如人口动态模型（Population dynamics），和RC电路模型（An RC electric circuit）</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="1-4一般的情况"><a href="#1-4一般的情况" class="headerlink" title="1.4一般的情况"></a>1.4一般的情况</h2><p>我们来分析一般的一阶线性方程</p>
+<script type="math/tex; mode=display">
+x'(t)+p(t)x(t)=q(t),t\in I</script><p>此时p(t),q(t)都是在区间I上连续的。</p>
+<p>-如果q(t)=0,那么就称之为<strong>齐次</strong>的，否则方程就是<strong>非齐次</strong>的。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4 id="积分因子"><a href="#积分因子" class="headerlink" title="积分因子"></a>积分因子</h4><p>在我们解微分方程的重要一步就是找方程的<strong>积分因子</strong>（Integrating Factor）</p>
+<p>假设一个微分方程u（t）满足$u（t）&gt;0$ </p>
+<p>存在$u(t)x’(t)+u(t)p(t)x(t)=(u(t)x(t))’$</p>
+<p>这样，函数$u(t)$就被称为方程的<strong>积分因子</strong></p>
+<p>有$x’(t)+p(t)x(t)=q(t)$</p>
+<p>将上面的两式化简可得，当$x(t) \ne 0$时</p>
+<script type="math/tex; mode=display">
+u(t)p(t)=u'(t)</script><p>继续化简可得</p>
+<script type="math/tex; mode=display">
+u(t)=e^{P(t)}</script><script type="math/tex; mode=display">
+P(t)=\int {p(t)dt}</script><p>因此，对于方程$(u(t)x(t))’=u(t)q(t)$,方程两边同时进行积分可得</p>
+<script type="math/tex; mode=display">
+u(t)x(t)=C +\int u(t) q(t)dt</script><p>带入$u(t)=e^{P(t)}$可得</p>
+<script type="math/tex; mode=display">
+x(t)=e^{-P(t)}(c+ \int e^{P(t)q(t)dt}),
+P(t)=\int p(t)dt</script><p>&nbsp;</p>
+<p>&nbsp;</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>对于下列求初值方程</p>
+<script type="math/tex; mode=display">
+x'(t)+p(t)x(t)=q(t),x(t_0)=x_0</script><script type="math/tex; mode=display">
+x(t)=e^{\int_{t_0}^{t}p(s)ds}(x_0+ \int_{t_0}^{t}e^{\int_{t_0}^{t}p(\tau )d\tau }q(s)ds)</script><p>-当q(t)=0时有</p>
+<script type="math/tex; mode=display">
+x'(t)+p(t)x(t)=0,x(t_0)=x_0</script><script type="math/tex; mode=display">
+x(t)=x_0e^{\int_{t_0}^{t}p(s)ds}</script><p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="一阶非线性微分方程"><a href="#一阶非线性微分方程" class="headerlink" title="一阶非线性微分方程"></a>一阶非线性微分方程</h2><h3 id="可分方程-Separable-Equation"><a href="#可分方程-Separable-Equation" class="headerlink" title="可分方程(Separable Equation)"></a>可分方程(Separable Equation)</h3><h4 id="形式"><a href="#形式" class="headerlink" title="形式"></a>形式</h4><script type="math/tex; mode=display">
+x'(t) = h(t)g(x)</script><p>要求：h(t)连续，g(x)连续可微</p>
+<p>&nbsp;</p>
+<h5 id="g-t-的一个零点时函数的常数解"><a href="#g-t-的一个零点时函数的常数解" class="headerlink" title="g(t)的一个零点时函数的常数解"></a>g(t)的一个零点时函数的常数解</h5><p>g(k)=0</p>
+<p>x(t)=k</p>
+<p>&nbsp;</p>
+<h4 id="所有不变的解都用直线x-k分隔"><a href="#所有不变的解都用直线x-k分隔" class="headerlink" title="所有不变的解都用直线x=k分隔"></a>所有不变的解都用直线x=k分隔</h4><p>函数的常数解和非常数解不相交</p>
+<p>&nbsp;</p>
+<h4 id="非常数解"><a href="#非常数解" class="headerlink" title="非常数解"></a>非常数解</h4><script type="math/tex; mode=display">
+\frac{x'(t)}{g(x(t))}=h(t)，g(x)=0</script><script type="math/tex; mode=display">
+\int \frac{x'(t)}{g(x(t))}dt = \int h(t)dt</script><script type="math/tex; mode=display">
+\int \frac{dx}{g(x)}= \int h(t)+c</script><p>&nbsp;</p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>对于解一般的可分方程的思路，一般情况下，左边是x的微分形式，方程右边是关于x和关于t的方程</p>
+<p>1.令关于x的方程g(x)等于0，其零点就是关于方程的常数解</p>
+<p>2.将g(x)提取到方程左边，x’dt=1dx</p>
+<p>3.方程两边同时积分，得出化简后的式子</p>
+<p>4.如果有初值，带入即可求出方程中未知量</p>
+<p>5.化简即可求出方程的解</p>
+<p>关于一些会用到的积分技巧</p>
+<p>$\int \frac{1}{x^2 +1}dx=t+c$   ——&gt; $arctanx=t+c$—-&gt;  $x=tan(t+c)$</p>
+<p>$\int \frac{1}{(x+1)(x-1)}dx=t+c$—-&gt;$\frac{1}{2}\int \frac{1}{x-1}-\frac{1}{x+1}dx=t+c$——&gt;$\frac{1}{2}ln|\frac{x-1}{x+1}|=t+c$  (绝对值不要忘记加)</p>
+<h3 id="逻辑方程"><a href="#逻辑方程" class="headerlink" title="逻辑方程"></a>逻辑方程</h3><script type="math/tex; mode=display">
+x'(t)=x(t)(\alpha - \beta x(t)),\alpha,\beta>0</script><p>此时，$x = 0$和$x(t)=\frac{\alpha}{\beta}$是方程的两个常数解</p>
+<p>如果再假设$x(t)&gt;0$</p>
+<p>根据唯一性，可以将不定方程分为两类</p>
+<script type="math/tex; mode=display">
+0<x(t)<\frac{\alpha}{\beta}</script><p>和</p>
+<p>其本质上是方程$x’=x(\alpha -\beta x)$的两个解，此时我们有</p>
+<script type="math/tex; mode=display">
+\frac{dx}{x(\alpha - \beta x)}=dt</script><script type="math/tex; mode=display">
+\int \frac{1}{\alpha}·\frac{1}{x}dx+\int \frac{\beta}{\alpha}\frac{1}{\alpha - \beta x}dx =t+c</script><script type="math/tex; mode=display">
+\frac{1}{\alpha}ln|x|-\frac{1}{\alpha}ln|\alpha -\beta x|= t+c</script><script type="math/tex; mode=display">
+\frac{|x|}{|\alpha - \beta x|}=e^{\alpha t+\alpha c}=ke^{\alpha t}</script><p>这里$k=e^{\alpha c}$,可以获得两个区间</p>
+<script type="math/tex; mode=display">
+0<x(t)<\frac{\alpha}{\beta}</script><p>和</p>
+<script type="math/tex; mode=display">
+x(t)>\frac{\alpha}{\beta}</script><p>当$x&lt;x(t)&lt;\frac{\alpha}{\beta}$时</p>
+<script type="math/tex; mode=display">
+\frac{x}{\alpha - \beta x}=ke^{\alpha t}</script><p>解得</p>
+<script type="math/tex; mode=display">
+x(t)=\frac{\alpha k e^{\alpha t}}{1+\beta k e^{\alpha t}}</script><p>当$x(t)&gt;\frac{\alpha}{\beta}$时</p>
+<script type="math/tex; mode=display">
+-\frac{x}{\alpha - \beta x}=ke^{\alpha t}</script><p>解得</p>
+<script type="math/tex; mode=display">
+x(t)=\frac{-\alpha k e^{\alpha t}}{1-\beta ke^{\alpha t}}</script><p>在此情况下，$\lim_{x \to \infty}x(t)=\frac{\alpha }{\beta}$</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/11/03/Rg8eB.png" alt="Rg8eB.png" border="0"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rozen12123.github.io">小江</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rozen12123.github.io/posts/9c4368b0.html">https://rozen12123.github.io/posts/9c4368b0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rozen12123.github.io" target="_blank">小江的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B8%B8%E5%BE%AE%E5%88%86/">常微分</a></div><div class="post_share"><div class="social-share" data-image="https://i.imgtg.com/2022/11/03/RmBet.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><link rel="stylesheet" href="/css/coin/coin.css" media="defer" onload="this.media='all'"/><div class="post-reward"><button class="tip-button reward-button"><span class="tip-button__text">不给糖果就捣蛋</span><div class="coin-wrapper"><div class="coin"><div class="coin__middle"></div><div class="coin__back"></div><div class="coin__front"></div></div></div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://i.imgtg.com/2022/11/07/R8xgU.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/11/07/R8xgU.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://i.imgtg.com/2022/11/07/R8kWp.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/11/07/R8kWp.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></button></div><audio id="coinAudio" src="https://cdn.cbd.int/akilar-candyassets@1.0.36/audio/aowu.m4a"></audio><script defer="defer" src="/js/coin/coin.js"></script><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/9ab27f24.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img1.imgtp.com/2022/09/08/9GCpiTBV.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">大学物理(三)</div></div></a></div><div class="next-post pull-right"><a href="/posts/4a17b156.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img1.imgtp.com/2022/09/08/srqB6I2n.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello World</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/a913fd01.html" title="一阶非线性微分方程"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/11/03/RmBet.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-01</div><div class="title">一阶非线性微分方程</div></div></a></div><div><a href="/posts/1636524d.html" title="二阶方程"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/11/03/RmBet.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-09</div><div class="title">二阶方程</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/10/31/RiMSC.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小江</div><div class="author-info__description">浪漫至死不渝</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E5%BE%AE%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">常微分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E9%98%B6%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">一阶线性方程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">1.1.0.1.1.</span> <span class="toc-text">性质</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B%E5%A6%82%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="toc-number">1.1.0.1.1.1.</span> <span class="toc-text">例如：一个常微分方程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E5%BE%AE%E5%88%86%E5%92%8C%E5%81%8F%E5%BE%AE%E5%88%86"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">常微分和偏微分</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E5%BE%AE%E5%88%86%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="toc-number">1.1.0.2.1.</span> <span class="toc-text">常微分的次数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B%E5%A6%82"><span class="toc-number">1.1.0.2.2.</span> <span class="toc-text">例如</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E7%89%B9%E6%AE%8A%E5%86%99%E6%B3%95"><span class="toc-number">1.1.0.2.3.</span> <span class="toc-text">一个特殊写法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 简单的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E4%B8%80%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">最重要的一个概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B%E5%A6%82-1"><span class="toc-number">1.2.0.1.1.</span> <span class="toc-text">例如</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E5%BA%94%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 应用的一些例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4%E4%B8%80%E8%88%AC%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">1.4.</span> <span class="toc-text">1.4一般的情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%AF%E5%88%86%E5%9B%A0%E5%AD%90"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">积分因子</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.0.1.1.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%98%B6%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">一阶非线性微分方程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%88%86%E6%96%B9%E7%A8%8B-Separable-Equation"><span class="toc-number">1.5.1.</span> <span class="toc-text">可分方程(Separable Equation)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">形式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#g-t-%E7%9A%84%E4%B8%80%E4%B8%AA%E9%9B%B6%E7%82%B9%E6%97%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%B8%B8%E6%95%B0%E8%A7%A3"><span class="toc-number">1.5.1.1.1.</span> <span class="toc-text">g(t)的一个零点时函数的常数解</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E4%B8%8D%E5%8F%98%E7%9A%84%E8%A7%A3%E9%83%BD%E7%94%A8%E7%9B%B4%E7%BA%BFx-k%E5%88%86%E9%9A%94"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">所有不变的解都用直线x&#x3D;k分隔</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E5%B8%B8%E6%95%B0%E8%A7%A3"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">非常数解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%96%B9%E7%A8%8B"><span class="toc-number">1.5.2.</span> <span class="toc-text">逻辑方程</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/ec4b5731.html" title="esp32开发环境搭建（arduino）"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32开发环境搭建（arduino）"/></a><div class="content"><a class="title" href="/posts/ec4b5731.html" title="esp32开发环境搭建（arduino）">esp32开发环境搭建（arduino）</a><time datetime="2023-07-05T06:56:01.000Z" title="发表于 2023-07-05 14:56:01">2023-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e7f7981b.html" title="esp32WIFI"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32WIFI"/></a><div class="content"><a class="title" href="/posts/e7f7981b.html" title="esp32WIFI">esp32WIFI</a><time datetime="2023-07-02T06:20:25.000Z" title="发表于 2023-07-02 14:20:25">2023-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/30e8a1b9.html" title="esp32传感器"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32传感器"/></a><div class="content"><a class="title" href="/posts/30e8a1b9.html" title="esp32传感器">esp32传感器</a><time datetime="2023-07-02T04:20:30.000Z" title="发表于 2023-07-02 12:20:30">2023-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7fbb683d.html" title="esp32基础实验"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32基础实验"/></a><div class="content"><a class="title" href="/posts/7fbb683d.html" title="esp32基础实验">esp32基础实验</a><time datetime="2023-07-01T14:34:17.000Z" title="发表于 2023-07-01 22:34:17">2023-07-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/86375cb2.html" title="esp32"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32"/></a><div class="content"><a class="title" href="/posts/86375cb2.html" title="esp32">esp32</a><time datetime="2023-07-01T13:55:14.000Z" title="发表于 2023-07-01 21:55:14">2023-07-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 小江</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><div class="aplayer no-destroy" data-id="8613306921" data-server="tencent" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><div class="app-refresh" id="app-refresh" style="position: fixed;top: -2.2rem;left: 0;right: 0;z-index: 99999;padding: 0 1rem;font-size: 15px;height: 2.2rem;transition: all 0.3s ease;"><div class="app-refresh-wrap" style=" display: flex;color: #fff;height: 100%;align-items: center;justify-content: center;"><label>✨ 有新文章啦！ 👉</label><a href="javascript:void(0)" onclick="location.reload()"><span style="color: #fff;text-decoration: underline;cursor: pointer;">🍗点击食用🍔</span></a></div></div><script>if ('serviceWorker' in navigator) {
+if (navigator.serviceWorker.controller) {
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+showNotification()
+})
+}
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('/sw.js')
+})
+}
+function showNotification() {
+if (GLOBAL_CONFIG.Snackbar) {
+var snackbarBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+GLOBAL_CONFIG.Snackbar.bgLight :
+GLOBAL_CONFIG.Snackbar.bgDark
+var snackbarPos = GLOBAL_CONFIG.Snackbar.position
+Snackbar.show({
+text: '✨ 有新文章啦！ 👉',
+backgroundColor: snackbarBg,
+duration: 500000,
+pos: snackbarPos,
+actionText: '🍗点击食用🍔',
+actionTextColor: '#fff',
+onActionClick: function(e) {
+location.reload()
+},
+})
+} else {
+var showBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+'#49b1f5' :
+'#1f1f1f'
+var cssText = `top: 0; background: ${showBg};`
+document.getElementById('app-refresh').style.cssText = cssText
+}
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '902bd385afcc4538bd9a1c5dd7fc770f';
+  var gaud_map_key = '7ce8880b1a7c0b91617c1910d69b6309';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '114.306215,35.744848';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax src="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  function gitcalendar_injector_config(){
+      var parent_div_git = document.getElementById('recent-posts');
+      var item_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 280px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      console.log('已挂载gitcalendar')
+      }
+
+    if( document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+        gitcalendar_injector_config()
+        GitCalendarInit("https://github.anzhiy.cn/api?Rozen12123",['#e4dfd7', '#f9f4dc', '#f7e8aa', '#f7e8aa', '#f8df72', '#fcd217', '#fcc515', '#f28e16', '#fb8b05', '#d85916', '#f43e06'],'Rozen12123')
+    }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

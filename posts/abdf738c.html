@@ -1,0 +1,706 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>k210基础实验 | 小江的博客</title><meta name="keywords" content="k210"><meta name="author" content="小江"><meta name="copyright" content="小江"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="点亮第一个 LED其连接到 pyAI-K210 的外部 IO 引脚如下（可以看开发板原理图），LED 蓝灯对应的外部 IO 为 IO12，从电路可以看到当 IO12 为低电平时，蓝灯被点亮。  K210 为外部 IO 和内部 IO，其片上外设（比如 GPIO、I2C 等）对应的引脚是可以任意设置的，而传统大部分 MCU 片上外设和引脚对应关系已经固定了， 只有部分引脚可以复用， 相比之下 K210">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k210基础实验">
+<meta property="og:url" content="https://rozen12123.github.io/posts/abdf738c.html">
+<meta property="og:site_name" content="小江的博客">
+<meta property="og:description" content="点亮第一个 LED其连接到 pyAI-K210 的外部 IO 引脚如下（可以看开发板原理图），LED 蓝灯对应的外部 IO 为 IO12，从电路可以看到当 IO12 为低电平时，蓝灯被点亮。  K210 为外部 IO 和内部 IO，其片上外设（比如 GPIO、I2C 等）对应的引脚是可以任意设置的，而传统大部分 MCU 片上外设和引脚对应关系已经固定了， 只有部分引脚可以复用， 相比之下 K210">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2023-03-17T07:16:09.000Z">
+<meta property="article:modified_time" content="2023-04-10T17:39:55.298Z">
+<meta property="article:author" content="小江">
+<meta property="article:tag" content="k210">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rozen12123.github.io/posts/abdf738c"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><meta name="msapplication-TileColor" content="#49b1f5"/><link rel="apple-touch-icon" sizes="180x180" href="/img/siteicon/128.png"/><link rel="icon" type="image/png" sizes="32x32" href="/img/siteicon/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/img/siteicon/16.png"/><link rel="mask-icon" href="/img/siteicon/128.png" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'k210基础实验',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-11 01:39:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="小江的博客" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/10/31/RiMSC.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">小江的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">k210基础实验</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-17T07:16:09.000Z" title="发表于 2023-03-17 15:16:09">2023-03-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-10T17:39:55.298Z" title="更新于 2023-04-11 01:39:55">2023-04-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="k210基础实验"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="点亮第一个-LED"><a href="#点亮第一个-LED" class="headerlink" title="点亮第一个 LED"></a><strong>点亮第一个</strong> <strong>LED</strong></h2><p>其连接到 pyAI-K210 的外部 IO 引脚如下（可以看开发板原理图），LED 蓝灯对应的外部 IO 为 IO12，从电路可以看到当 IO12 为低电平时，蓝灯被点亮。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317151920787.png" alt="image-20230317151920787"></p>
+<p>K210 为外部 IO 和内部 IO，其片上外设（比如 GPIO、I2C 等）对应的引脚是可以任意设置的，而传统大部分 MCU 片上外设和引脚对应关系已经固定了， 只有部分引脚可以复用， 相比之下 K210 自由度更大。</p>
+<p>因此我们在编程使用 GPIO 的时候需要注册一下硬件 IO 和 K210 内部 IO 的对应关系。注册方式使用 fpioa_manager：简称 fm，该模块用于注册芯片内部功能和引脚，帮助用户管理内部功能和引脚。</p>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fm.register(pin,function,force=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<p>【pin】芯片外部 IO</p>
+<p>【function】芯片功能</p>
+<p>【force】=True 则强制注册，清除之前的注册记录；</p>
+<p>例：fm.register(12, fm.fpioa.GPIO0,force=True)</p>
+<p>表示将外部 IO12 注册到内部 GPIO0</p>
+<p>更多有关引脚和功能注册信息请看官方文档：</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.sipeed.com/soft/maixpy/zh/api_reference/Maix/gpio.html">https://wiki.sipeed.com/soft/maixpy/zh/api_reference/Maix/gpio.html</a></p>
+<p>注册成功后我们就可以通过 GPIO 对象模块来控制外部 IO，从而控制 LED。</p>
+<p>GPIO 对象说明如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO(ID,MODE,PULL,VALUE)</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">GPIO 对象。</span><br><span class="line"></span><br><span class="line">【ID】内部 GPIO 编号;</span><br><span class="line"></span><br><span class="line">【MODE】GPIO 模式；</span><br><span class="line"></span><br><span class="line">GPIO.IN ：输入模式</span><br><span class="line"></span><br><span class="line">GPIO.OUT ：输出模式</span><br><span class="line"></span><br><span class="line">【PULL】</span><br><span class="line"></span><br><span class="line">GPIO.PULL<span class="emphasis">_UP ：上拉</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">GPIO.PULL_</span>DOWN ：下拉</span><br><span class="line"></span><br><span class="line">GPIO.PULL<span class="emphasis">_NONE ：无</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">【value】GPIO 初始化电平</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">1：高电平</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">0：低电平</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO.value([value])</span><br></pre></td></tr></table></figure>
+<p>【value】GPIO 输出电平值；</p>
+<p>1：高电平</p>
+<p>0：低电平</p>
+<p>方式 1 是：import Maix，然后通过 Maix.GPIO 来操作；</p>
+<p>方式 2 是：from Maix import GPIO，意思是直接从 Maix 中引入 GPIO 模块，然后直接通过 GPIO 来操作。显然方式 2 会显得更直观和方便，本实验也是使用</p>
+<p>方式 2 来编程。代码编写流程如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317160716756.png" alt="image-20230317160716756"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;  </span></span><br><span class="line"><span class="string">实验名称：点亮 LED_B 蓝灯</span></span><br><span class="line"><span class="string">实验目的：学习 led 点亮。</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">from</span> Maix <span class="keyword">import</span> GPIO</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="comment">#将蓝灯引脚 IO12 配置到 GPIO0，K210 引脚支持任意配置</span></span><br><span class="line">fm.register(<span class="number">12</span>, fm.fpioa.GPIO0,force=<span class="literal">True</span>)</span><br><span class="line">LED_B = GPIO(GPIO.GPIO0, GPIO.OUT) <span class="comment">#构建 LED 对象</span></span><br><span class="line">LED_B.value(<span class="number">0</span>) <span class="comment">#点亮 LED</span></span><br></pre></td></tr></table></figure>
+<p>关于python中from和import</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/keenajiao/p/15336312.html">Python的from和import用法 - keena_jiao - 博客园 (cnblogs.com)</a></p>
+<h3 id="流水灯"><a href="#流水灯" class="headerlink" title="流水灯"></a>流水灯</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">utime()</span><br><span class="line"><span class="comment">#时间模块</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">utime.sleep(seconds)</span><br><span class="line">秒级颜色。seconds:延时秒数</span><br><span class="line">utime.sleep_ms(ms)</span><br><span class="line">毫秒级延时。ms：延时毫秒数。</span><br><span class="line">utime.sleep_us(us)</span><br><span class="line">微秒级延时。us：延时微秒数。</span><br></pre></td></tr></table></figure>
+<p>*更多用法请阅读 MaixPy 官方文档：</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.sipeed.com/soft/maixpy/zh/api_reference/standard/utime.html">https://wiki.sipeed.com/soft/maixpy/zh/api_reference/standard/utime.html</a></p>
+<p>知道了延时函数的使用方法后，我们可以简单的梳理一下流程，首先导入LED 和 utime 模块，程序开始先让 RGB LED 灭掉，开启循环，依次点亮每个 LED，延时 1 秒，关闭 LED。流程如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317164443689.png" alt="image-20230317164443689"></p>
+<p>代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">实验名称：流水灯</span></span><br><span class="line"><span class="string">版本：v1.0</span></span><br><span class="line"><span class="string">日期：2019.12</span></span><br><span class="line"><span class="string">作者：01Studio</span></span><br><span class="line"><span class="string">实验目的：让 RGB 灯循环闪烁。</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">from</span> Maix <span class="keyword">import</span> GPIO</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="keyword">import</span> utime</span><br><span class="line"><span class="comment">#将将 LED 外部 IO 注册到内部 GPIO，K210 引脚支持任意配置</span></span><br><span class="line">fm.register(<span class="number">12</span>, fm.fpioa.GPIO0)</span><br><span class="line">fm.register(<span class="number">13</span>, fm.fpioa.GPIO1)</span><br><span class="line">fm.register(<span class="number">14</span>, fm.fpioa.GPIO2)</span><br><span class="line">LED_B = GPIO(GPIO.GPIO0, GPIO.OUT,value=<span class="number">1</span>) <span class="comment">#构建 LED 对象</span></span><br><span class="line">LED_G = GPIO(GPIO.GPIO1, GPIO.OUT,value=<span class="number">1</span>) <span class="comment">#构建 LED 对象</span></span><br><span class="line">LED_R = GPIO(GPIO.GPIO2, GPIO.OUT,value=<span class="number">1</span>) <span class="comment">#构建 LED 对象</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"> </span><br><span class="line"> <span class="comment">#蓝灯亮 1 秒</span></span><br><span class="line"> LED_B.value(<span class="number">0</span>) <span class="comment">#点亮 LED</span></span><br><span class="line"> utime.sleep(<span class="number">1</span>)</span><br><span class="line"> LED_B.value(<span class="number">1</span>) <span class="comment">#关闭 LED</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">#绿灯亮 1 秒</span></span><br><span class="line"> LED_G.value(<span class="number">0</span>) <span class="comment">#点亮 LED</span></span><br><span class="line">    utime.sleep(<span class="number">1</span>)</span><br><span class="line"> LED_G.value(<span class="number">1</span>) <span class="comment">#关闭 LED</span></span><br><span class="line"> <span class="comment">#红灯亮 1 秒</span></span><br><span class="line"> LED_R.value(<span class="number">0</span>) <span class="comment">#点亮 LED</span></span><br><span class="line"> utime.sleep(<span class="number">1</span>)</span><br><span class="line">LED_R.value(<span class="number">1</span>) <span class="comment">#关闭 LED</span></span><br></pre></td></tr></table></figure>
+<p>上述代码没错是完整地按照编程思路来编写，但可以见到有很多格式相似的地方，这显得代码非常冗余。我们可以通过 for 函数来编写程序，由于是对 3 个LED 的操作，因此我们可以用 for i in range(0,3): 语句来修改，参考代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">实验名称：流水灯</span></span><br><span class="line"><span class="string">版本：v1.0</span></span><br><span class="line"><span class="string">日期：2019.12</span></span><br><span class="line"><span class="string">作者：01Studio</span></span><br><span class="line"><span class="string">实验目的：让 RGB 灯循环闪烁。</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">from</span> Maix <span class="keyword">import</span> GPIO</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="keyword">import</span> utime</span><br><span class="line"><span class="comment">#将将 LED 外部 IO 注册到内部 GPIO，K210 引脚支持任意配置</span></span><br><span class="line">fm.register(<span class="number">12</span>, fm.fpioa.GPIO0)</span><br><span class="line">fm.register(<span class="number">13</span>, fm.fpioa.GPIO1)</span><br><span class="line">fm.register(<span class="number">14</span>, fm.fpioa.GPIO2)</span><br><span class="line"><span class="comment">#构建 LED 对象，并初始化输出高电平，关闭 LED</span></span><br><span class="line">LED_B = GPIO(GPIO.GPIO0, GPIO.OUT,value=<span class="number">1</span>)</span><br><span class="line">LED_G = GPIO(GPIO.GPIO1, GPIO.OUT,value=<span class="number">1</span>)</span><br><span class="line">LED_R = GPIO(GPIO.GPIO2, GPIO.OUT,value=<span class="number">1</span>)</span><br><span class="line"><span class="comment">#定义数组方便循环语句调用</span></span><br><span class="line">LED=[LED_B, LED_G, LED_R]</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">  LED[i].value(<span class="number">0</span>) <span class="comment">#点亮 LED</span></span><br><span class="line"> utime.sleep(<span class="number">1</span>)</span><br><span class="line"> LED[i].value(<span class="number">1</span>) <span class="comment">#关闭 LED</span></span><br></pre></td></tr></table></figure>
+<h3 id="按键"><a href="#按键" class="headerlink" title="按键"></a><strong>按键</strong></h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317172918745.png" alt="image-20230317172918745"></p>
+<p>从原理图可以看到，按键 KEY 的一端连接到 K210 的外部 IO16，另一端连接到 GND。所以按键在没按下时候输入高电平（1），按下时候输入低电平（0）。和 LED 一样，按键的输入检测也是用到 GPIO 对象模块，具体如下：</p>
+<h4 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO(ID,MODE,PULL,VALUE)</span><br></pre></td></tr></table></figure>
+<p>GPIO 对象。</p>
+<p>【ID】内部 GPIO 编号;</p>
+<p>【MODE】GPIO 模式；</p>
+<p>GPIO.IN ：输入模式</p>
+<p>GPIO.OUT ：输出模式</p>
+<p>【PULL】</p>
+<p>GPIO.PULL_UP ：上拉</p>
+<p>GPIO.PULL_DOWN ：下拉</p>
+<p>GPIO.PULL_NONE ：无</p>
+<p>【value】GPIO 初始化电平</p>
+<p>1：高电平</p>
+<p>0：低电平</p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO.value([value])</span><br></pre></td></tr></table></figure>
+<p>【value】GPIO 输出电平值；</p>
+<p>1：高电平</p>
+<p>0：低电平</p>
+<p>*输入模式时候参数为空，表示获取当前 IO 输入电平值。</p>
+<p>GPIO 对象使用非常简单，我们将按键即外部“IO16”引脚配置成输入，实现当检测到按键被按下时候点亮 LED 蓝灯，松开时关闭 LED 蓝灯来做指示。代码编写流程如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317173251976.png" alt="image-20230317173251976"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Maix <span class="keyword">import</span> GPIO</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="comment">#注册 IO，蓝灯--&gt;IO12,KEY--&gt;IO16</span></span><br><span class="line">fm.register(<span class="number">12</span>, fm.fpioa.GPIO0)</span><br><span class="line">fm.register(<span class="number">16</span>, fm.fpioa.GPIO1)</span><br><span class="line"><span class="comment">#初始化 IO</span></span><br><span class="line">LED_B = GPIO(GPIO.GPIO0, GPIO.OUT)</span><br><span class="line">KEY = GPIO(GPIO.GPIO1, GPIO.IN)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"> <span class="keyword">if</span> KEY.value()==<span class="number">0</span>: <span class="comment">#按键被按下接地</span></span><br><span class="line">  LED_B.value(<span class="number">0</span>) <span class="comment">#点亮 LED_B,蓝灯</span></span><br><span class="line"> <span class="keyword">else</span>:</span><br><span class="line">  LED_B.value(<span class="number">1</span>) <span class="comment">#熄灭 LED</span></span><br></pre></td></tr></table></figure>
+<h3 id="外部中断"><a href="#外部中断" class="headerlink" title="外部中断"></a><strong>外部中断</strong></h3><p>前面我们在做普通的按键（GPIO）时候，虽然能实现 IO 口输入输出功能，但代码是一直在检测 IO 输入口的变化，因此效率不高，特别是在一些特定的场合，比如某个按键，可能 1 天才按下一次去执行相关功能，这样我们就浪费大量时间来实时检测按键的情况。</p>
+<p>为了解决这样的问题，我们引入外部中断概念，顾名思义，就是当按键被按下(产生中断)时，我们才去执行相关功能。这大大节省了 CPU 的资源，因此中断的在实际项目的应用非常普遍。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO.irq(CALLBACK_FUNC,TRIGGER_CONDITION)</span><br></pre></td></tr></table></figure>
+<p>配置中断。</p>
+<p>【CALLBACK_FUNC】中断执行的回调函数；</p>
+<p>【TRIGGER_CONDITION】中断触发方式；</p>
+<p>GPIO.IRQ_RISING：上升沿触发</p>
+<p>GPIO.IRQ_FALLING：下降沿沿触发</p>
+<p>GPIO.IRQ_BOTH：都触发</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO.disirq()</span><br></pre></td></tr></table></figure>
+<p>关闭中断。</p>
+<p>我们先来了解一下上升沿和下降沿的概念，由于按键 KEY 引脚是通过按键接到 GND，也就是我们所说的低电平“0”，所以当按键被按下再松开时，引脚先获得下降沿，再获得上升沿，如下图所示：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317174406258.png" alt="image-20230317174406258"></p>
+<p>按键被按下时候可能会发生抖动，抖动如下图，有可能造成误判，因此我们</p>
+<p>需要使用延时函数来进行消抖：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317174514133.png" alt="image-20230317174514133"></p>
+<p>我们可以选择下降沿方式触发外部中断，也就是当按键被按下的时候立即产</p>
+<p>生中断。</p>
+<p>需要注意的是 K210 只有高速 GPIO 才有外部中断，GPIO 常量表如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>K210 - GPIO</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通 GPIO</td>
+</tr>
+<tr>
+<td>GPIO0 - GPIO7</td>
+</tr>
+<tr>
+<td>高速 GPIO</td>
+</tr>
+<tr>
+<td>GPIOHS0 – GPIOHS31</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>编程思路中断跟 GPIO 按键章节类似，在初始化中断后，当系统检测到外部</p>
+<p>中断时候，执行 LED 状态反转的代码即可。流程图如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317174715882.png" alt="image-20230317174715882"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Maix <span class="keyword">import</span> GPIO</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="keyword">import</span> utime</span><br><span class="line"></span><br><span class="line"><span class="comment">#注册 IO，注意高速 GPIO 口才有中断</span></span><br><span class="line">fm.register(<span class="number">12</span>, fm.fpioa.GPIO0)</span><br><span class="line">fm.register(<span class="number">16</span>, fm.fpioa.GPIOHS0)</span><br><span class="line"><span class="comment">#构建 lED 和 KEY 对象</span></span><br><span class="line"></span><br><span class="line">LED_B=GPIO(GPIO.GPIO0,GPIO.OUT,value=<span class="number">1</span>)</span><br><span class="line">KEY=GPIO(GPIO.GPIOHS0, GPIO.IN, GPIO.PULL_UP)</span><br><span class="line"></span><br><span class="line"><span class="comment">#LED 状态表示</span></span><br><span class="line">state = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#中断回调函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fun</span>(<span class="params">KEY</span>):</span><br><span class="line"> <span class="keyword">global</span> state</span><br><span class="line"> utime.sleep_ms(<span class="number">10</span>) <span class="comment">#消除抖动</span></span><br><span class="line"> <span class="keyword">if</span> KEY.value()==<span class="number">0</span>: <span class="comment">#确认按键被按下</span></span><br><span class="line"> state = <span class="keyword">not</span> state</span><br><span class="line"> LED_B.value(state)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#开启中断，下降沿触发</span></span><br><span class="line">KEY.irq(fun, GPIO.IRQ_FALLING)</span><br></pre></td></tr></table></figure>
+<h3 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a><strong>定时器</strong></h3><h4 id="构造函数-2"><a href="#构造函数-2" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">machine.Timer(<span class="built_in">id</span>,channel,mode=Timer.MODE_ONE_SHOT,period=<span class="number">1000</span>,unit=Timer.UNIT_MS, callback=<span class="literal">None</span>, arg=<span class="literal">None</span>, start=<span class="literal">True</span>,</span><br><span class="line">priority=<span class="number">1</span>, div=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>定时器对象 Timer 对象在 machine 模块下。</p>
+<p>【id】定时器编号, [Timer.TIMER0~TIMER2] 定时器 0-2;</p>
+<p>【channel】Timer 通道，[Timer.CHANNEL0~Timer.CHANNEL3]</p>
+<p>【mode】定时器模式</p>
+<p>MODE_ONE_SHOT: 一次性</p>
+<p>MODE_PERIODIC: 周期性</p>
+<p>MODE_PWM</p>
+<p>【period】定时器为周期性模块时每个周期时间值</p>
+<p>【unit】周期的单位</p>
+<p>Timer.UNIT_S：秒</p>
+<p>Timer.UNIT_MS：毫秒</p>
+<p>Timer.UNIT_US：微妙</p>
+<p>Timer.UNIT_NS：纳秒</p>
+<p>【callback】定时器中断执行的回调函数；<strong>注意：回调函数是在中断中调用</strong></p>
+<p><strong>的，所以在回调函数中请不要占用太长时间以及做动态内存分配开关中断等</strong></p>
+<p><strong>动作。</strong></p>
+<p>【arg】回调函数第 2 个参数</p>
+<p>【start】是否在构建对象后立即开始定时器，</p>
+<p>=True: 立即开始；</p>
+<p>=False: 不立即开始，需要调用 start()来开启。</p>
+<p>【priority】硬件中断优先级，在 K210 中，取值范围是[1,7],值越小优先级越高</p>
+<p>【div】硬件分频器。</p>
+<h4 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Timer.callback(fun)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定义回调函数。</td>
+</tr>
+<tr>
+<td>Timer.period([value])</td>
+</tr>
+<tr>
+<td>配置周期。</td>
+</tr>
+<tr>
+<td>Timer.start()</td>
+</tr>
+<tr>
+<td>启动定时器。</td>
+</tr>
+<tr>
+<td>Timer.stop()</td>
+</tr>
+<tr>
+<td>停止定时器。</td>
+</tr>
+<tr>
+<td>Timer.deinit()</td>
+</tr>
+<tr>
+<td>注销定时器。</td>
+</tr>
+<tr>
+<td>*更多用法请阅读 MaixPy 官方文档：<a target="_blank" rel="noopener" href="https://wiki.sipeed.com/soft/maixpy/zh/api_reference/machine/timer.html">https://wiki.sipeed.com/soft/maixpy/zh/api_reference/machine/timer.html</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>定时器到了预设指定时间后，也会产生中断，因此跟外部中断的编程方式类</p>
+<p>似，代码编程流程图如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317231336487.png" alt="image-20230317231336487"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Maix <span class="keyword">import</span> GPIO</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="keyword">from</span> machine <span class="keyword">import</span> Timer</span><br><span class="line"></span><br><span class="line"><span class="comment">#注册 IO 和构建 LED 对象</span></span><br><span class="line">fm.register(<span class="number">12</span>, fm.fpioa.GPIO0)</span><br><span class="line">LED_B = GPIO(GPIO.GPIO0, GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="comment">#计数变量</span></span><br><span class="line">Counter=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#定时器回调函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fun</span>(<span class="params">tim</span>):</span><br><span class="line"> <span class="keyword">global</span> Counter</span><br><span class="line"> Counter = Counter + <span class="number">1</span></span><br><span class="line"> <span class="built_in">print</span>(Counter)</span><br><span class="line"> LED_B.value(Counter%<span class="number">2</span>)<span class="comment">#LED 循环亮灭。</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#定时器 0 初始化，周期 1 秒</span></span><br><span class="line">tim = Timer(Timer.TIMER0, Timer.CHANNEL0, mode=Timer.MODE_PERIODIC, </span><br><span class="line">period=<span class="number">1000</span>, callback=fun)</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 id="PWM"><a href="#PWM" class="headerlink" title="PWM"></a><strong>PWM</strong></h3><p>蜂鸣器分有源蜂鸣器和无源蜂鸣器，有源蜂鸣器的使用方式非常简单，只需</p>
+<p>要接上电源，蜂鸣器就发声，断开电源就停止发声。而本实验用到的无源蜂鸣器，是需要给定指定的频率，才能发声的，而且可以通过改变频率来改变蜂鸣器的发声音色，以此来判定 pyAI-K210 的 PWM 输出频率是在变化的。</p>
+<p>pyBase 开发底板上的无源蜂鸣器连接到引脚 X5。如下图所示：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317233012578.png" alt="image-20230317233012578"></p>
+<p>而 pyAI-K210 并没有引脚直接连接到 pyBase 的 X5（主要避免影响 IO 复用。）而 IO15 连接到 pyBase 开发底板的 X6 引脚，因此我们可以用跳线帽或者跳线来连接 pyBase 的 X5 和 X6 引脚。相当于将无源蜂鸣器接到 pyAI-K210 的外部 IO15引脚。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317233431274.png" alt="image-20230317233431274"></p>
+<h4 id="构造函数-3"><a href="#构造函数-3" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">machine.PWM(tim, freq, duty, pin, enable=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>PWM 对象在 machine 模块下。</p>
+<p>【tim】K210 的 PWM 依赖于定时器来产生波形</p>
+<p>【freq】PWM 频率</p>
+<p>【duty】PWM 占空比</p>
+<p>【pin】PWM 输出引脚</p>
+<p>【enable】是否在构建对象后立即产生波形，默认 True。</p>
+<h4 id="使用方法-2"><a href="#使用方法-2" class="headerlink" title="使用方法"></a>使用方法</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>PWM.freq(freq)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设置频率。不传参数返回当前频率值。</td>
+</tr>
+<tr>
+<td>PWM.duty(duty)</td>
+</tr>
+<tr>
+<td>设置占空比。不传参数返回当前占空比值。[0-100]表示占空比百分比<strong>107</strong></td>
+</tr>
+<tr>
+<td>PWM.enable()</td>
+</tr>
+<tr>
+<td>使能 PWM 输出。</td>
+</tr>
+<tr>
+<td>PWM.disable()</td>
+</tr>
+<tr>
+<td>暂停 PWM 输出。</td>
+</tr>
+<tr>
+<td>PWM.deinit()</td>
+</tr>
+<tr>
+<td>注销 PWM。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317233619775.png" alt="image-20230317233619775"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> machine <span class="keyword">import</span> Timer,PWM</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment">#PWM 通过定时器配置，接到 IO15 引脚</span></span><br><span class="line">tim = Timer(Timer.TIMER0, Timer.CHANNEL0, mode=Timer.MODE_PWM)</span><br><span class="line">beep = PWM(tim, freq=<span class="number">1</span>, duty=<span class="number">50</span>, pin=<span class="number">15</span>)</span><br><span class="line"><span class="comment">#循环发出不同频率响声。</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"> beep.freq(<span class="number">200</span>)</span><br><span class="line"> time.sleep(<span class="number">1</span>)</span><br><span class="line"> beep.freq(<span class="number">400</span>)</span><br><span class="line"> time.sleep(<span class="number">1</span>)</span><br><span class="line"> beep.freq(<span class="number">600</span>)</span><br><span class="line"> time.sleep(<span class="number">1</span>)</span><br><span class="line"> beep.freq(<span class="number">800</span>)</span><br><span class="line"> time.sleep(<span class="number">1</span>)</span><br><span class="line"> beep.freq(<span class="number">1000</span>)</span><br><span class="line"> time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>有条件的朋友可以使用示波器测量 pyAI-K210 的 IO15 引脚或 pyBase 的 X5 引脚，观察信号波形的变化：</p>
+<p>&nbsp;</p>
+<h3 id="I2C-总线（OLED显示屏）"><a href="#I2C-总线（OLED显示屏）" class="headerlink" title="I2C 总线（OLED显示屏）"></a><strong>I2C</strong> <strong>总线（OLED显示屏）</strong></h3><p>我们先来看看开发板的原理图，也就是MicroPython 上的 OLED 接口是如何连线的。下图是 pyBase 开发底板的原理图。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317234836169.png" alt="image-20230317234836169"></p>
+<p>我们再来看看 pyAI-K210 转接板的原理图接口部分。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230317235033250.png" alt="image-20230317235033250"></p>
+<p>结合以上可以得知 pyBase 底板连接到 OLED 的对应关系是 Y6→SCL 和Y8→SDA。对应 pyAI-K210 的关系是：IO27→Y6→SCL，IO28→Y8→SDA。本例程将使用 MicroPython 的 Machine 模块的 I2C 来定义 Pin 口和 I2C 初始化。具体如下：</p>
+<p>&nbsp;</p>
+<h4 id="构造函数-4"><a href="#构造函数-4" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">machine.I2C(<span class="built_in">id</span>, mode=I2C.MODE_MASTER, scl=<span class="literal">None</span>, sda=<span class="literal">None</span>,</span><br><span class="line">freq=<span class="number">400000</span>, timeout=<span class="number">1000</span>, addr=<span class="number">0</span>, addr_size=<span class="number">7</span>)</span><br></pre></td></tr></table></figure>
+<p>构建 I2C 对象。</p>
+<p>【id】I2C ID,[ I2C.I2C0~I2C.I2C2 ]</p>
+<p>【scl】时钟引脚；直接传引脚编号；</p>
+<p>【sda】数据引脚; 直接传引脚编号；</p>
+<p>【freq】通信频率，即速度；</p>
+<p>【timeout】参数保留，设置无效；</p>
+<p>【addr】从机地址；</p>
+<p>【addr_size】地址长度， 支持 7 位寻址和 10 位寻址， 取值 7 或者 10。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>使用方法</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>i2c.scan()</td>
+</tr>
+<tr>
+<td>扫描 I2C 总线的设备。返回地址，如：0x3c；</td>
+</tr>
+<tr>
+<td>i2c.readfrom(addr,len)</td>
+</tr>
+<tr>
+<td>从指定地址读数据。addr:指定设备地址；len:读取字节数；</td>
+</tr>
+<tr>
+<td>i2c.writeto(addr,buf)</td>
+</tr>
+<tr>
+<td>写数据。addr:从机地址；buf:数据内容；</td>
+</tr>
+<tr>
+<td>i2c.deinit()</td>
+</tr>
+<tr>
+<td>注销 I2C。</td>
+</tr>
+<tr>
+<td>*其它更多用法请阅读官方文档：<a target="_blank" rel="noopener" href="https://wiki.sipeed.com/soft/maixpy/zh/api_reference/machine/i2c.h">https://wiki.sipeed.com/soft/maixpy/zh/api_reference/machine/i2c.h</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>定义好 I2C 后，还需要驱动一下 OLED。这里我们已经写好了 OLED 的库函数，在 ssd1306k.py 文件里面。开发者只需要将改 py 文件拷贝到 pyAI-K210 文件系统里面，然后在 main.py 里面调用函数即可。人生苦短，我们学会调用函数即可，也就是注重顶层的应用，想深入的小伙伴也可以自行研究 ssd1306k.py 文件代码。OLED 显示屏对象介绍如下：</p>
+<h4 id="构造函数-5"><a href="#构造函数-5" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oled = SSD1306_I2C(i2c, addr)</span><br></pre></td></tr></table></figure>
+<p>构 OLED 显示屏对象。默认分辨率 128*64；</p>
+<p>【i2c】定义好的 I2C 对象;</p>
+<p>【addr】显示屏设备地址。</p>
+<h4 id="使用方法-3"><a href="#使用方法-3" class="headerlink" title="使用方法"></a>使用方法</h4><p>oled.fill([value])</p>
+<p>清屏</p>
+<p>value=0x00 (黑屏)；value=0xFF(白屏)</p>
+<p>oled.text(string,x,y)</p>
+<p>将 string 字符写在指定为位置。</p>
+<p>【string】：字符；</p>
+<p>【x】横坐标；[0-127]；</p>
+<p>【y】纵坐标。[0-7] 共 8 行</p>
+<p>学习了 I2C、OLED 对象用法后我们通过编程流程图来理顺一下思路：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318000154918.png" alt="image-20230318000154918"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> machine <span class="keyword">import</span> I2C</span><br><span class="line"><span class="keyword">from</span> ssd1306k <span class="keyword">import</span> SSD1306</span><br><span class="line"></span><br><span class="line"><span class="comment">#定义 I2C 接口和 OLED 对象</span></span><br><span class="line">i2c = I2C(I2C.I2C0, mode=I2C.MODE_MASTER,scl=<span class="number">27</span>, sda=<span class="number">28</span>)</span><br><span class="line">oled = SSD1306(i2c, addr=<span class="number">0x3c</span>)</span><br><span class="line"><span class="comment">#清屏,0x00(白屏)，0xff(黑屏)</span></span><br><span class="line">oled.fill(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#显示字符。参数格式为（str,x,y）,其中 x 范围是 0-127，y 范围是 0-7（共 8 行）</span></span><br><span class="line">oled.text(<span class="string">&quot;Hello World!&quot;</span>, <span class="number">0</span>, <span class="number">0</span>) <span class="comment">#写入第 0 行内容</span></span><br><span class="line">oled.text(<span class="string">&quot;MicroPython&quot;</span>, <span class="number">0</span>, <span class="number">2</span>) <span class="comment">#写入第 2 行内容</span></span><br><span class="line">oled.text(<span class="string">&quot;By 01Studio&quot;</span>, <span class="number">0</span>, <span class="number">5</span>) <span class="comment">#写入第 5 行内容</span></span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 id="UART（串口通信）"><a href="#UART（串口通信）" class="headerlink" title="UART（串口通信）"></a><strong>UART（串口通信）</strong></h3><p>  串口是非常常用的通信接口，有很多工控产品、无线透传模块都是使用串口来收发指令和传输数据，这样用户就可以在无须考虑底层实现原理的前提下将各类串口功能模块灵活应用起来。</p>
+<p>&nbsp;</p>
+<p>K210 一共有 3 个串口，每个串口可以自由映射引脚。 例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># IO6→RX1，IO7→TX1</span></span><br><span class="line">fm.register(<span class="number">6</span>, fm.fpioa.UART1_RX, force=<span class="literal">True</span>)</span><br><span class="line">fm.register(<span class="number">7</span>, fm.fpioa.UART1_TX, force=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<h4 id="构造函数-6"><a href="#构造函数-6" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">machine.UART(uart,baudrate,bits,parity,stop,timeout, read_buf_len)</span><br></pre></td></tr></table></figure>
+<p>创建 UART 对象。</p>
+<p>【uart】串口编号。[UART.UART1~UART3]</p>
+<p>【baudrate】波特率，常用 115200、9600</p>
+<p>【bits】数据位,默认 8</p>
+<p>【parity】校验；默认 None, 0(偶校验)，1(奇校验)</p>
+<p>【stop】停止位，默认 1</p>
+<p>【timeout】串口接收超时时间</p>
+<p>【read_buf_len】串口接收缓冲大小。</p>
+<h4 id="使用方法-4"><a href="#使用方法-4" class="headerlink" title="使用方法"></a>使用方法</h4><p>UART.read(num)</p>
+<p>读取串口缓冲数据</p>
+<p>【num】读取字节数</p>
+<p>UART.readline(num)</p>
+<p>读取串口缓冲数据的行</p>
+<p>【num】行数</p>
+<p>UART.write(buf)</p>
+<p>串口发送数据</p>
+<p>【buf】需要发送的数据</p>
+<p>UART.deinit()</p>
+<p>注销串口</p>
+<p>&nbsp;</p>
+<p>我们可以用一个USB转TTL工具，配合电脑上位机串口助手来跟MicroPython</p>
+<p>开发板模拟通信。<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318211732179.png" alt="image-20230318211732179"></p>
+<p>注意要使用 3.3V 电平的 USB 转串口 TTL 工具，本实验我们使用 pyBase 的外</p>
+<p>接串口引脚，也就是 Y9（TX）和 Y10（RX），接线示意图如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318211750029.png" alt="image-20230318211750029"></p>
+<p>从 pyAI-K210 原理图可以看到外部 IO6→Y9→RX ，IO7→Y10→TX。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318211813224.png" alt="image-20230318211813224"></p>
+<p>在本实验中我们可以先初始化串口，然后给串口发去一条信息，这样 PC 机的串口助手就会在接收区显示出来，然后进入循环，当检测到有数据可以接收时候就将数据接收并打印，并通过 REPL 打印显示。代码编写流程图如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318211835639.png" alt="image-20230318211835639"></p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> machine <span class="keyword">import</span> UART,Timer</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="comment">#映射串口引脚</span></span><br><span class="line">fm.register(<span class="number">6</span>, fm.fpioa.UART1_RX, force=<span class="literal">True</span>)</span><br><span class="line">fm.register(<span class="number">7</span>, fm.fpioa.UART1_TX, force=<span class="literal">True</span>)</span><br><span class="line"><span class="comment">#初始化串口</span></span><br><span class="line">uart = UART(UART.UART1, <span class="number">115200</span>, read_buf_len=<span class="number">4096</span>)</span><br><span class="line">uart.write(<span class="string">&#x27;Hello 01Studio!&#x27;</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"> text=uart.read() <span class="comment">#读取数据</span></span><br><span class="line"> <span class="keyword">if</span> text: <span class="comment">#如果读取到了数据</span></span><br><span class="line">  <span class="built_in">print</span>(text.decode(<span class="string">&#x27;utf-8&#x27;</span>)) <span class="comment">#REPL 打印</span></span><br><span class="line">  uart.write(<span class="string">&#x27;I got&#x27;</span>+text.decode(<span class="string">&#x27;utf-8&#x27;</span>)) <span class="comment">#数据回传</span></span><br></pre></td></tr></table></figure>
+<h4 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h4><p>这时候打开电脑的设备管理器，能看到 2 个 COM。写着 CH340 的是串口工具，另外一个则是 pyAI-K210 的 REPL。如果 CH340 驱动没安装，则需要手动安装，驱动在：配套资料包→开发工具→windows→串口终端→CH340 文件夹下。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318212444828.png" alt="image-20230318212444828"></p>
+<p>本实验要用到串口助手，打开配套资料包→开发工具→windows→串口终端工具下的【UartAssist.exe】软件。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318212503108.png" alt="image-20230318212503108"></p>
+<p>将串口工具配置成 COM14（根据自己的串口号调整）。波特率 115200。运行程序，可以看到一开始串口助手收到 pyAI-K210 上电发来的信息“Hello 01Studio!”。我们在串口助手的发送端输入“<a target="_blank" rel="noopener" href="http://www.01studio.org”，">http://www.01studio.org”，</a> 点击发送，可以看到pyAI-K210 在接收到该信息后在 REPL 里面打印了出来。如下图所示：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318212528352.png" alt="image-20230318212528352"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 id="thread（线程）"><a href="#thread（线程）" class="headerlink" title="thread（线程）"></a><strong>thread（线程）</strong></h3><p>我们看到前面的编程都是一个循环来完成，但当我们需要分时完成不同任务时候，线程编程就派上用场了。这有点像 RTOS(实时操作系统)，今天我们就来学习一下如何通过 MicroPython 编程实现多线程。</p>
+<p>&nbsp;</p>
+<p>pyAI-K210 的 MicroPython 固件已经集成了_thread 线程模块。我们直接调用即可。该模块衍生于 python3，属于低级线程，详情可以看官网介绍：<a target="_blank" rel="noopener" href="https://docs.python.org/3.5/library/_thread.html#module-thread">https://docs.python.org/3.5/library/_thread.html#module-thread</a></p>
+<p>编程流程如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/posts/abdf738c.htm/image-20230318212724180.png" alt="image-20230318212724180"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> _thread <span class="comment">#导入线程模块</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment">#线程函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">name</span>):</span><br><span class="line"> <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"> <span class="built_in">print</span>(<span class="string">&quot;hello &#123;&#125;&quot;</span>.<span class="built_in">format</span>(name)) </span><br><span class="line"> time.sleep(<span class="number">1</span>)</span><br><span class="line"> _thread.start_new_thread(func,(<span class="string">&quot;1&quot;</span>,)) <span class="comment">#开启线程 1，参数必须是元组</span></span><br><span class="line">_thread.start_new_thread(func,(<span class="string">&quot;2&quot;</span>,)) <span class="comment">#开启线程 2，参数必须是元组</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"><span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rozen12123.github.io">小江</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rozen12123.github.io/posts/abdf738c.html">https://rozen12123.github.io/posts/abdf738c.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rozen12123.github.io" target="_blank">小江的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/k210/">k210</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><link rel="stylesheet" href="/css/coin/coin.css" media="defer" onload="this.media='all'"/><div class="post-reward"><button class="tip-button reward-button"><span class="tip-button__text">不给糖果就捣蛋</span><div class="coin-wrapper"><div class="coin"><div class="coin__middle"></div><div class="coin__back"></div><div class="coin__front"></div></div></div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://i.imgtg.com/2022/11/07/R8xgU.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/11/07/R8xgU.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://i.imgtg.com/2022/11/07/R8kWp.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/11/07/R8kWp.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></button></div><audio id="coinAudio" src="https://cdn.cbd.int/akilar-candyassets@1.0.36/audio/aowu.m4a"></audio><script defer="defer" src="/js/coin/coin.js"></script><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/210a3ee2.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">k210机器视觉</div></div></a></div><div class="next-post pull-right"><a href="/posts/a08a9fe.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">k210</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/a08a9fe.html" title="k210"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-17</div><div class="title">k210</div></div></a></div><div><a href="/posts/384e6f73.html" title="k210项目"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-19</div><div class="title">k210项目</div></div></a></div><div><a href="/posts/210a3ee2.html" title="k210机器视觉"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-18</div><div class="title">k210机器视觉</div></div></a></div><div><a href="/posts/a4696bae.html" title="k210拓展模块"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-19</div><div class="title">k210拓展模块</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgtg.com/2022/10/31/RiMSC.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小江</div><div class="author-info__description">浪漫至死不渝</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AA-LED"><span class="toc-number">1.</span> <span class="toc-text">点亮第一个 LED</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%81%AF"><span class="toc-number">1.2.</span> <span class="toc-text">流水灯</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">使用方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%94%AE"><span class="toc-number">1.3.</span> <span class="toc-text">按键</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD"><span class="toc-number">1.4.</span> <span class="toc-text">外部中断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">定时器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-2"><span class="toc-number">1.5.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-1"><span class="toc-number">1.5.2.</span> <span class="toc-text">使用方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PWM"><span class="toc-number">1.6.</span> <span class="toc-text">PWM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-3"><span class="toc-number">1.6.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-2"><span class="toc-number">1.6.2.</span> <span class="toc-text">使用方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2C-%E6%80%BB%E7%BA%BF%EF%BC%88OLED%E6%98%BE%E7%A4%BA%E5%B1%8F%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">I2C 总线（OLED显示屏）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-4"><span class="toc-number">1.7.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-5"><span class="toc-number">1.7.2.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-3"><span class="toc-number">1.7.3.</span> <span class="toc-text">使用方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UART%EF%BC%88%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">UART（串口通信）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-6"><span class="toc-number">1.8.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-4"><span class="toc-number">1.8.2.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.8.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.8.4.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#thread%EF%BC%88%E7%BA%BF%E7%A8%8B%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">thread（线程）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/ec4b5731.html" title="esp32开发环境搭建（arduino）"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32开发环境搭建（arduino）"/></a><div class="content"><a class="title" href="/posts/ec4b5731.html" title="esp32开发环境搭建（arduino）">esp32开发环境搭建（arduino）</a><time datetime="2023-07-05T06:56:01.000Z" title="发表于 2023-07-05 14:56:01">2023-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e7f7981b.html" title="esp32WIFI"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32WIFI"/></a><div class="content"><a class="title" href="/posts/e7f7981b.html" title="esp32WIFI">esp32WIFI</a><time datetime="2023-07-02T06:20:25.000Z" title="发表于 2023-07-02 14:20:25">2023-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/30e8a1b9.html" title="esp32传感器"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32传感器"/></a><div class="content"><a class="title" href="/posts/30e8a1b9.html" title="esp32传感器">esp32传感器</a><time datetime="2023-07-02T04:20:30.000Z" title="发表于 2023-07-02 12:20:30">2023-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7fbb683d.html" title="esp32基础实验"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32基础实验"/></a><div class="content"><a class="title" href="/posts/7fbb683d.html" title="esp32基础实验">esp32基础实验</a><time datetime="2023-07-01T14:34:17.000Z" title="发表于 2023-07-01 22:34:17">2023-07-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/86375cb2.html" title="esp32"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="esp32"/></a><div class="content"><a class="title" href="/posts/86375cb2.html" title="esp32">esp32</a><time datetime="2023-07-01T13:55:14.000Z" title="发表于 2023-07-01 21:55:14">2023-07-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 小江</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><div class="aplayer no-destroy" data-id="8613306921" data-server="tencent" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><div class="app-refresh" id="app-refresh" style="position: fixed;top: -2.2rem;left: 0;right: 0;z-index: 99999;padding: 0 1rem;font-size: 15px;height: 2.2rem;transition: all 0.3s ease;"><div class="app-refresh-wrap" style=" display: flex;color: #fff;height: 100%;align-items: center;justify-content: center;"><label>✨ 有新文章啦！ 👉</label><a href="javascript:void(0)" onclick="location.reload()"><span style="color: #fff;text-decoration: underline;cursor: pointer;">🍗点击食用🍔</span></a></div></div><script>if ('serviceWorker' in navigator) {
+if (navigator.serviceWorker.controller) {
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+showNotification()
+})
+}
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('/sw.js')
+})
+}
+function showNotification() {
+if (GLOBAL_CONFIG.Snackbar) {
+var snackbarBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+GLOBAL_CONFIG.Snackbar.bgLight :
+GLOBAL_CONFIG.Snackbar.bgDark
+var snackbarPos = GLOBAL_CONFIG.Snackbar.position
+Snackbar.show({
+text: '✨ 有新文章啦！ 👉',
+backgroundColor: snackbarBg,
+duration: 500000,
+pos: snackbarPos,
+actionText: '🍗点击食用🍔',
+actionTextColor: '#fff',
+onActionClick: function(e) {
+location.reload()
+},
+})
+} else {
+var showBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+'#49b1f5' :
+'#1f1f1f'
+var cssText = `top: 0; background: ${showBg};`
+document.getElementById('app-refresh').style.cssText = cssText
+}
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '902bd385afcc4538bd9a1c5dd7fc770f';
+  var gaud_map_key = '7ce8880b1a7c0b91617c1910d69b6309';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '114.306215,35.744848';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax src="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  function gitcalendar_injector_config(){
+      var parent_div_git = document.getElementById('recent-posts');
+      var item_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 280px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      console.log('已挂载gitcalendar')
+      }
+
+    if( document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+        gitcalendar_injector_config()
+        GitCalendarInit("https://github.anzhiy.cn/api?Rozen12123",['#e4dfd7', '#f9f4dc', '#f7e8aa', '#f7e8aa', '#f8df72', '#fcd217', '#fcc515', '#f28e16', '#fb8b05', '#d85916', '#f43e06'],'Rozen12123')
+    }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
