@@ -198,11 +198,13 @@
     <link href="https://rozen12123.github.io/posts/e06f755d.html"/>
     <id>https://rozen12123.github.io/posts/e06f755d.html</id>
     <published>2023-03-19T05:38:31.000Z</published>
-    <updated>2023-03-23T08:50:30.136Z</updated>
+    <updated>2023-07-06T07:55:59.679Z</updated>
     
     
     
     
+    
+    <category term="k210" scheme="https://rozen12123.github.io/tags/k210/"/>
     
   </entry>
   
@@ -340,10 +342,10 @@
   
   <entry>
     <title>inventor开发</title>
-    <link href="https://rozen12123.github.io/posts/undefined.html"/>
-    <id>https://rozen12123.github.io/posts/undefined.html</id>
+    <link href="https://rozen12123.github.io/posts/null.html"/>
+    <id>https://rozen12123.github.io/posts/null.html</id>
     <published>2023-01-16T07:33:59.000Z</published>
-    <updated>2023-01-16T07:49:04.385Z</updated>
+    <updated>2023-07-06T08:00:21.108Z</updated>
     
     <content type="html"><![CDATA[<h1 id="app-inventor开发蓝牙app"><a href="#app-inventor开发蓝牙app" class="headerlink" title="app inventor开发蓝牙app"></a>app inventor开发蓝牙app</h1><h2 id="蓝牙app开发流程"><a href="#蓝牙app开发流程" class="headerlink" title="蓝牙app开发流程"></a>蓝牙app开发流程</h2><ol><li>App inventor开发APP</li><li>AT指令配置蓝牙模块</li><li>测试</li></ol><p>&nbsp;</p><p>App inventor网址：<a href="http://app.gzjkw.net/">http://app.gzjkw.net/</a></p><h2 id="组件设计"><a href="#组件设计" class="headerlink" title="组件设计"></a>组件设计</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><h4 id="蓝牙的选择和断开"><a href="#蓝牙的选择和断开" class="headerlink" title="蓝牙的选择和断开"></a>蓝牙的选择和断开</h4><p>表格布局————列表选择框———-可以选择连接哪个蓝牙</p><p>&nbsp;</p><h2 id="逻辑设计"><a href="#逻辑设计" class="headerlink" title="逻辑设计"></a>逻辑设计</h2><p>列表选择框</p>]]></content>
     
