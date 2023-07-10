@@ -6,7 +6,7 @@
   <link href="https://rozen12123.github.io/atom.xml" rel="self"/>
   
   <link href="https://rozen12123.github.io/"/>
-  <updated>2023-07-06T07:47:38.939Z</updated>
+  <updated>2023-07-07T09:13:42.900Z</updated>
   <id>https://rozen12123.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>k210与esp32串口通信</title>
+    <link href="https://rozen12123.github.io/posts/bfa0354e.html"/>
+    <id>https://rozen12123.github.io/posts/bfa0354e.html</id>
+    <published>2023-07-07T07:22:55.000Z</published>
+    <updated>2023-07-07T09:13:42.900Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="k210与esp32串口通信"><a href="#k210与esp32串口通信" class="headerlink" title="k210与esp32串口通信"></a>k210与esp32串口通信</h1><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fm.register(pin,function,force=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure><p>【pin】芯片外部 IO，<strong>外部I对应上图K210的IO而非Maxiduino</strong></p><p>【function】芯片功能</p><p>【force】=True 则强制注册，清除之前的注册记录；</p><p>例：fm.register(12, fm.fpioa.GPIO0,force=True)</p><p>表示将外部 IO12 注册到内部 GPIO0</p><p>&nbsp;</p><h2 id="maxiduino与电脑串口进行通信"><a href="#maxiduino与电脑串口进行通信" class="headerlink" title="maxiduino与电脑串口进行通信"></a>maxiduino与电脑串口进行通信</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> machine <span class="keyword">import</span> UART,Timer</span><br><span class="line"><span class="keyword">from</span> fpioa_manager <span class="keyword">import</span> fm</span><br><span class="line"><span class="comment">#映射串口引脚</span></span><br><span class="line">fm.register(<span class="number">11</span>, fm.fpioa.UART1_RX, force=<span class="literal">True</span>)</span><br><span class="line">fm.register(<span class="number">10</span>, fm.fpioa.UART1_TX, force=<span class="literal">True</span>)</span><br><span class="line"><span class="comment">#初始化串口</span></span><br><span class="line">uart = UART(UART.UART1, <span class="number">115200</span>, read_buf_len=<span class="number">4096</span>)</span><br><span class="line">uart.write(<span class="string">&#x27;Hello word!&#x27;</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"> text=uart.read() <span class="comment">#读取数据</span></span><br><span class="line"> <span class="keyword">if</span> text: <span class="comment">#如果读取到了数据</span></span><br><span class="line">  <span class="built_in">print</span>(text.decode(<span class="string">&#x27;utf-8&#x27;</span>)) <span class="comment">#REPL 打印</span></span><br><span class="line">  uart.write(<span class="string">&#x27;I got&#x27;</span>+text.decode(<span class="string">&#x27;utf-8&#x27;</span>)) <span class="comment">#数据回传</span></span><br></pre></td></tr></table></figure><p>&nbsp;</p><h2 id="esp32-s3与电脑串口进行通信"><a href="#esp32-s3与电脑串口进行通信" class="headerlink" title="esp32_s3与电脑串口进行通信"></a>esp32_s3与电脑串口进行通信</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;k210与esp32串口通信&quot;&gt;&lt;a href=&quot;#k210与esp32串口通信&quot; class=&quot;headerlink&quot; title=&quot;k210与esp32串口通信&quot;&gt;&lt;/a&gt;k210与esp32串口通信&lt;/h1&gt;
+&lt;h3 id=&quot;构造函数&quot;&gt;&lt;a href=&quot;#</summary>
+      
+    
+    
+    
+    
+    <category term="esp32" scheme="https://rozen12123.github.io/tags/esp32/"/>
+    
+  </entry>
   
   <entry>
     <title>esp32_s3多任务处理</title>
@@ -432,29 +455,6 @@
     
     
     <category term="单片机" scheme="https://rozen12123.github.io/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>arduino内存</title>
-    <link href="https://rozen12123.github.io/posts/44ae0abd.html"/>
-    <id>https://rozen12123.github.io/posts/44ae0abd.html</id>
-    <published>2023-01-10T02:45:23.000Z</published>
-    <updated>2023-01-21T10:10:01.743Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="arduino内存"><a href="#arduino内存" class="headerlink" title="arduino内存"></a>arduino内存</h2><p>内部储存单元由几种不同的介质组成</p><div class="table-container"><table><thead><tr><th>介质</th><th>名称</th><th>特点</th><th>储存特点</th></tr></thead><tbody><tr><td>FLASH</td><td>闪存（U盘）</td><td>价格低，读写慢</td><td>数量较大的静态信息。断电后可以保持存储内容。存储程序</td></tr><tr><td>SRAM</td><td>静态随机存储器</td><td>价格高，读写快</td><td>数量较小的动态信息，断电后不可以保持存储内容。储存程序变量</td></tr><tr><td>EEPROM</td><td>电可擦除可编程只读存储器</td><td>可擦写可编程 ，读写速度慢</td><td>只能读取信息，不能储存信息。（例如光盘）用于需要断电保持的程序变量</td></tr></tbody></table></div><p>&nbsp;</p><h3 id="在EEPROM中读取和储存数据"><a href="#在EEPROM中读取和储存数据" class="headerlink" title="在EEPROM中读取和储存数据"></a>在EEPROM中读取和储存数据</h3><p>对于arduino uno其有1024个字节（1kb）</p><p>可以储存1024个0~255十进制数</p><p>&nbsp;</p><h2 id="内存优化"><a href="#内存优化" class="headerlink" title="内存优化"></a>内存优化</h2><p>SRAM资源远远小于FLASH资源</p><h3 id="优化SRAM"><a href="#优化SRAM" class="headerlink" title="优化SRAM"></a>优化SRAM</h3><h4 id="串口监视器输出时用"><a href="#串口监视器输出时用" class="headerlink" title="串口监视器输出时用"></a>串口监视器输出时用</h4><p>用SRAM储存</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Serial. println(<span class="string">&quot;Taichi-Maker&quot;</span>);</span><br></pre></td></tr></table></figure><p>用FLASH储存</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Serial. println (F(<span class="string">&quot;Taichi-Maker&quot;</span>));</span><br></pre></td></tr></table></figure><p>&nbsp;</p><h3 id="建立常量"><a href="#建立常量" class="headerlink" title="建立常量"></a>建立常量</h3><p>用SRAM储存静态信息会对使用空间进行浪费</p><p>此时我们可以用FLASH分担SRAM的压力</p><p>将常量储存在FLASH中</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> a = <span class="number">125</span>;<span class="comment">//储存在SRAM中</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> PROGMEM a = <span class="number">125</span>；<span class="comment">//储存在Flash中</span></span><br></pre></td></tr></table></figure><p>&nbsp;</p><h3 id="局部变量和全局变量"><a href="#局部变量和全局变量" class="headerlink" title="局部变量和全局变量"></a>局部变量和全局变量</h3><p>我们可以从下列代码中来体会全局变量和局部变量的特点</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> globalVarl；<span class="comment">//全局变量1</span></span><br><span class="line"><span class="type">int</span> globalVar2；<span class="comment">//全局变量2</span></span><br><span class="line"><span class="type">void</span> setup（）&#123;</span><br><span class="line">｝</span><br><span class="line"><span class="type">void</span> loop（）&#123;</span><br><span class="line">function_1（）；<span class="comment">//调用函数1</span></span><br><span class="line">function_2（）；<span class="comment">//调用函数2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> function_1（）&#123;</span><br><span class="line"><span class="type">int</span> localVarl；<span class="comment">//函数1局部变量</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> function_2&#123;</span><br><span class="line"><span class="type">int</span> localVar2；<span class="comment">//函数2局部变量</span></span><br><span class="line">｝</span><br></pre></td></tr></table></figure><div class="table-container"><table><thead><tr><th>内存</th><th>特点</th></tr></thead><tbody><tr><td>SRAM</td><td>共享的局部变量</td></tr><tr><td>SRAM</td><td>独享的全局变量</td></tr></tbody></table></div><p>要更好地优化空间我们就需要尽量多使用==局部变量==代替==全局变量==</p><p>&nbsp;</p><h3 id="用bool型的变量代替int型的变量做逻辑判断"><a href="#用bool型的变量代替int型的变量做逻辑判断" class="headerlink" title="用bool型的变量代替int型的变量做逻辑判断"></a>用bool型的变量代替int型的变量做逻辑判断</h3><h4 id="用整形占用两个字节"><a href="#用整形占用两个字节" class="headerlink" title="用整形占用两个字节"></a>用整形占用两个字节</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a；　　<span class="comment">//变量a用于逻辑判断</span></span><br><span class="line"><span class="type">void</span> setup（）&#123;</span><br><span class="line">｝</span><br><span class="line"><span class="type">void</span> loop（）&#123;</span><br><span class="line"><span class="keyword">if</span>（a== <span class="number">1</span>）&#123;</span><br><span class="line"><span class="comment">//变量a等于1时执行的内容</span></span><br><span class="line">&#125;</span><br><span class="line">｝</span><br></pre></td></tr></table></figure><h4 id="用bool占用一个字节"><a href="#用bool占用一个字节" class="headerlink" title="用bool占用一个字节"></a>用bool占用一个字节</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> a；<span class="comment">//变量a用于逻辑判断</span></span><br><span class="line"><span class="type">void</span> setup（）&#123;</span><br><span class="line">｝</span><br><span class="line"><span class="type">void</span> loop（）&#123;</span><br><span class="line"><span class="keyword">if</span>（a == <span class="number">1</span>）&#123;</span><br><span class="line"><span class="comment">//变量a等于1时执行的内容</span></span><br><span class="line">&#125;</span><br><span class="line">｝</span><br></pre></td></tr></table></figure><p>尽量使用占用内存少的数据类型</p><p>具体的数据类型及其相关信息可以参考这个网站<a href="http://www.taichi-maker.com/homepage/reference-index/arduino-code-reference/data-types/">Arduino常用数据类型简介 – 太极创客 (taichi-maker.com)</a></p><p>（8位微控制器）</p><p>&nbsp;</p><h3 id="优化FLASH"><a href="#优化FLASH" class="headerlink" title="优化FLASH"></a>优化FLASH</h3><p>即优化我们的arduino程序</p><h4 id="删除无用代码"><a href="#删除无用代码" class="headerlink" title="删除无用代码"></a>删除无用代码</h4><ul><li>无用库</li><li>无用变量</li><li>无用函数</li><li>无用代码</li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;arduino内存&quot;&gt;&lt;a href=&quot;#arduino内存&quot; class=&quot;headerlink&quot; title=&quot;arduino内存&quot;&gt;&lt;/a&gt;arduino内存&lt;/h2&gt;&lt;p&gt;内部储存单元由几种不同的介质组成&lt;/p&gt;
-&lt;div class=&quot;table-con</summary>
-      
-    
-    
-    
-    
-    <category term="arduino" scheme="https://rozen12123.github.io/tags/arduino/"/>
     
   </entry>
   
