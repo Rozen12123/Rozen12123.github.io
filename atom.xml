@@ -6,7 +6,7 @@
   <link href="https://rozen12123.github.io/atom.xml" rel="self"/>
   
   <link href="https://rozen12123.github.io/"/>
-  <updated>2023-09-18T02:38:42.140Z</updated>
+  <updated>2023-09-18T02:47:26.135Z</updated>
   <id>https://rozen12123.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://rozen12123.github.io/posts/b9875b9f.html"/>
     <id>https://rozen12123.github.io/posts/b9875b9f.html</id>
     <published>2023-09-16T11:26:32.000Z</published>
-    <updated>2023-09-18T02:38:42.140Z</updated>
+    <updated>2023-09-18T02:47:26.135Z</updated>
     
     <content type="html"><![CDATA[<h1 id="自动控制原理"><a href="#自动控制原理" class="headerlink" title="自动控制原理"></a>自动控制原理</h1><p>​    控制系统（Control system）:在给定的条件下，通过操纵达到预期性能的系统</p><p>​    控制系统中的操纵器：控制器（contriller）/补偿器（compensator）[重点在于控制参数与结构]</p><p>控制器需要考虑的三大性能</p><ol><li>稳定性（Stability）：有界输入对应有界输出（BIBO）</li><li>瞬时响应（Transient response）：指标：响应速度</li><li>稳态响应（Steady-state response）</li></ol><p>&nbsp;</p><p>控制目标：</p><ol><li>稳定不稳定的系统</li><li>提高系统的稳定性；使得系统具有更好的稳定性。等效于改善系统的瞬时响应：更快的响应，较小的超调量</li></ol>]]></content>
     
@@ -44,7 +44,7 @@
     <link href="https://rozen12123.github.io/posts/3c5c3e03.html"/>
     <id>https://rozen12123.github.io/posts/3c5c3e03.html</id>
     <published>2023-09-13T02:38:58.000Z</published>
-    <updated>2023-09-16T11:24:01.876Z</updated>
+    <updated>2023-09-18T02:48:56.786Z</updated>
     
     <content type="html"><![CDATA[<h1 id="数字化结构设计"><a href="#数字化结构设计" class="headerlink" title="数字化结构设计"></a>数字化结构设计</h1><h2 id="层次建模的概念"><a href="#层次建模的概念" class="headerlink" title="层次建模的概念"></a>层次建模的概念</h2><h3 id="设计方法学"><a href="#设计方法学" class="headerlink" title="设计方法学"></a>设计方法学</h3><p>两种基本的设计方法：<code>自底向上</code>和<code>自顶向下</code>设计</p><p>1.自底向上</p><p>2.自顶向下</p><p>通常情况下，两种方法混合使用。</p><p>&nbsp;</p><p>&nbsp;</p><h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>​     Verilog使用模块（module）的概念来代表一个基本的功能块。</p><p>​    一个模块可以是一个元件，也可以是低层次模块的组合</p><h3 id="1-模块声明"><a href="#1-模块声明" class="headerlink" title="1.模块声明"></a>1.模块声明</h3><p>​    在Verilog中，模块声明是由关键字module开始，关键字endmodule必须出现在模块定义的结尾。每个模块必须有一个模块名，由它唯一的标志这个模块。模块的端口列表则描述这个模块的输入和输出端口</p><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> &lt;模块名&gt;(&lt;模块端口列表&gt;);</span><br><span class="line">...</span><br><span class="line">&lt;模块的内容&gt;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure><p>例如在脉动进位计数器的例子中，T触发器可以定义为：</p><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> T_FF (q, clock ,reset);</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">&lt;T触发器的功能描述&gt;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>]]></content>
     
