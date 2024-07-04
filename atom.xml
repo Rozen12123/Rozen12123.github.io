@@ -6,7 +6,7 @@
   <link href="https://rozen12123.github.io/atom.xml" rel="self"/>
   
   <link href="https://rozen12123.github.io/"/>
-  <updated>2024-07-04T16:06:00.010Z</updated>
+  <updated>2024-07-04T16:41:54.452Z</updated>
   <id>https://rozen12123.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>机器学习--jupyter notebook的使用</title>
     <link href="https://rozen12123.github.io/posts/0.html"/>
     <id>https://rozen12123.github.io/posts/0.html</id>
     <published>2024-03-23T08:59:57.036Z</published>
-    <updated>2024-07-04T16:06:00.010Z</updated>
+    <updated>2024-07-04T16:41:54.452Z</updated>
     
     <content type="html"><![CDATA[<h1 id="jupyter使用中无法显示中文"><a href="#jupyter使用中无法显示中文" class="headerlink" title="jupyter使用中无法显示中文"></a>jupyter使用中无法显示中文</h1><p>在jupyter中，通过matplotlib作图时可能会添加中文标题，但有时候会不显示中文</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">6</span>, <span class="number">0.1</span>) <span class="comment"># 以0.1为单位，成0到6的数据</span></span><br><span class="line">y1 = np.sin(x)</span><br><span class="line">y2 = np.cos(x)</span><br><span class="line"></span><br><span class="line">plt.plot(x, y1, label = <span class="string">&quot;sin&quot;</span>) <span class="comment"># label 为图例</span></span><br><span class="line">plt.plot(x, y2, linestyle = <span class="string">&quot;--&quot;</span>, label = <span class="string">&quot;cos&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;x&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;y&quot;</span>)</span><br><span class="line">plt.title(<span class="string">&quot;汉字&quot;</span>)</span><br><span class="line">plt.legend() <span class="comment"># 图例显示</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/Rozen12123/picture/main/202403231654472.png" alt="image-20240323165405318"></p><p>在Python脚本中动态设置matplotlibrc,这样可以避免由于更改配置文件而造成的麻烦，具体代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> mpl</span><br><span class="line">\<span class="comment"># 设置显示中文字体</span></span><br><span class="line">mpl.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;SimHei&quot;</span>]</span><br></pre></td></tr></table></figure><p>有时候，字体更改后，会导致坐标轴中的部分字符无法正常显示，此时需要更改axes.unicode_minus参数：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置正常显示符号</span></span><br><span class="line">mpl.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span></span><br></pre></td></tr></table></figure><p>即为添加如下代码：</p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> mpl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置显示中文字体</span></span><br><span class="line">mpl.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;SimHei&quot;</span>]</span><br><span class="line"><span class="comment"># 设置正常显示符号</span></span><br><span class="line">mpl.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span></span><br></pre></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/Rozen12123/picture/main/202403231658181.png" alt="image-20240323165843130"></p><p>即可显示中文。</p><h2 id="解决方案二："><a href="#解决方案二：" class="headerlink" title="解决方案二："></a>解决方案二：</h2><p>下载中文字体（黑体，看准系统版本）</p><ul><li>步骤一：下载 SimHei 字体（或者其他的支持中文显示的字体也行）</li></ul><p>步骤二：安装字体</p><p>linux下：拷贝字体到 usr/share/fonts 下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp ~/SimHei.ttf /usr/share/fonts/SimHei.ttf</span><br></pre></td></tr></table></figure><p>windows和mac下：双击安装    </p><p>步骤三：删除~/.matplotlib中的缓存文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.matplotlib</span><br><span class="line">rm -r *</span><br></pre></td></tr></table></figure><p>步骤四：修改配置文件matplotlibrc</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.matplotlib/matplotlibrc</span><br></pre></td></tr></table></figure><p>将文件内容修改为：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">font.family : sans-serif</span><br><span class="line">font.sans-serif : SimHei</span><br><span class="line">axes.unicode_minus : False</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -33,6 +33,8 @@
     
     
     
+    
+    <category term="机器学习" scheme="https://rozen12123.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -197,8 +199,16 @@
     <link href="https://rozen12123.github.io/posts/7ca31f7.html"/>
     <id>https://rozen12123.github.io/posts/7ca31f7.html</id>
     <published>2023-12-17T12:17:25.000Z</published>
-    <updated>2023-12-19T08:14:21.216Z</updated>
+    <updated>2024-07-04T16:50:34.553Z</updated>
     
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/Rozen12123/picture/main/202407050046152.jpg" alt></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/Rozen12123/picture/main/202407050046152.jpg&quot; alt&gt;&lt;/p&gt;
+</summary>
+      
     
     
     
